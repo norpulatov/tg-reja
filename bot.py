@@ -20,14 +20,11 @@ async def send_welcome(message: types.Message):
     if user_id not in subscriptions or subscriptions[user_id] < datetime.now():
         await message.answer("❌ Sizda obuna yo'q yoki muddati tugagan. Iltimos, obuna sotib oling.")
     else:
-        await message.answer("✅ Xush kelibsiz! Bot menyusi:
+        await message.answer("""✅ Xush kelibsiz! Bot menyusi:
 
-"
-                             "📊 /expenses - Harajatlarni kiritish
-"
-                             "🗓 /plans - Rejalarni kiritish
-"
-                             "⏰ /reminders - Eslatmalar qo'shish")
+📊 /expenses - Harajatlarni kiritish
+🗓 /plans - Rejalarni kiritish
+⏰ /reminders - Eslatmalar qo'shish""")
 
 @dp.message_handler(commands=["addsub"])
 async def add_subscription(message: types.Message):
@@ -42,7 +39,7 @@ async def add_subscription(message: types.Message):
         subscriptions[user_id] = datetime.now() + timedelta(days=days)
         await message.answer(f"✅ Foydalanuvchi {user_id} uchun {days} kunlik obuna qo'shildi.")
         await bot.send_message(user_id, f"🎉 Sizga {days} kunlik obuna berildi!")
-    except Exception as e:
+    except Exception:
         await message.answer("❌ Xato format. Foydalanish: /addsub USER_ID KUN")
 
 @dp.message_handler(commands=["expenses"])
